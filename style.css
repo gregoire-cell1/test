@@ -1,6 +1,6 @@
-/* =========================
-   Variables et Reset
-============================ */
+/* ===================================================
+   Variables & Reset Global
+=================================================== */
 :root {
   --primary: #4f46e5;
   --secondary: #7c3aed;
@@ -10,6 +10,7 @@
   --text: #333;
   --transition: 0.3s ease;
   --shadow: 0 8px 24px rgba(0,0,0,0.1);
+  --duration: 0.4s;
 }
 
 * {
@@ -30,9 +31,9 @@ body {
   overflow-x: hidden;
 }
 
-/* =========================
+/* ===================================================
    Navbar
-============================ */
+=================================================== */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -73,9 +74,9 @@ body {
   color: var(--primary);
 }
 
-/* =========================
+/* ===================================================
    Sections & Headers
-============================ */
+=================================================== */
 .page-section {
   min-height: 100vh;
   padding: 4rem 2rem;
@@ -107,9 +108,13 @@ body {
   color: var(--text);
 }
 
-/* =========================
-   Hero Section
-============================ */
+/* ===================================================
+   Hero Section (Accueil)
+=================================================== */
+.hero-section {
+  position: relative;
+}
+
 .hero {
   display: flex;
   flex-wrap: wrap;
@@ -128,13 +133,13 @@ body {
 }
 
 .hero-content h1 {
-  font-size: 3.5rem;
+  font-size: 3.8rem;
   font-weight: 700;
   margin-bottom: 1rem;
 }
 
 .hero-content p {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   margin-bottom: 2rem;
 }
 
@@ -149,9 +154,39 @@ body {
   box-shadow: var(--shadow);
 }
 
-/* =========================
+/* Flèche de scroll */
+.scroll-down {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.scroll-btn {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--white);
+  animation: bounce 1.5s infinite;
+}
+
+.scroll-btn .arrow {
+  font-size: 2.5rem;
+}
+
+.scroll-btn .scroll-text {
+  font-size: 1rem;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* ===================================================
    Boutons
-============================ */
+=================================================== */
 .btn-main {
   display: inline-block;
   padding: 1rem 2.2rem;
@@ -167,19 +202,24 @@ body {
   background: #f1f1f1;
 }
 
-/* =========================
-   About & Features
-============================ */
-.about-content,
-.features-grid {
+/* ===================================================
+   About Section
+=================================================== */
+.about-section {
+  background: var(--grey);
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+}
+
+.about-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 2rem;
   padding: 0 1rem;
+  margin-top: 2rem;
 }
 
-.about-item,
-.feature-card {
+.about-item, .about-extra {
   background: var(--white);
   padding: 2rem;
   border-radius: 1rem;
@@ -187,15 +227,50 @@ body {
   text-align: center;
 }
 
-.about-item h3,
+.about-item h3, .about-extra h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+/* ===================================================
+   Features Section
+=================================================== */
+.features-section {
+  background: var(--white);
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  background: var(--grey);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
 .feature-card h3 {
   color: var(--primary);
   margin-bottom: 1rem;
 }
 
-/* =========================
-   Formations
-============================ */
+/* ===================================================
+   Formations Section
+=================================================== */
+.formations-section {
+  background: var(--grey);
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+}
+
 #filters {
   text-align: center;
   margin-bottom: 2rem;
@@ -215,6 +290,7 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   padding: 1rem;
+  margin-bottom: 2rem;
 }
 
 .card {
@@ -246,6 +322,7 @@ body {
   margin-bottom: 0.8rem;
 }
 
+/* Bouton Contact formation */
 .contact-btn {
   background: var(--primary);
   color: var(--white);
@@ -262,18 +339,39 @@ body {
   background: var(--secondary);
 }
 
-/* =========================
-   Témoignages
-============================ */
+.formations-extra {
+  padding: 2rem;
+  text-align: center;
+  background: var(--white);
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+  margin-top: 2rem;
+}
+
+.formations-extra h3 {
+  color: var(--primary);
+  margin-bottom: 0.8rem;
+}
+
+/* ===================================================
+   Testimonials Section
+=================================================== */
+.testimonials-section {
+  background: var(--white);
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+}
+
 .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   padding: 0 1rem;
+  margin-top: 2rem;
 }
 
 .testimonial-card {
-  background: var(--white);
+  background: var(--grey);
   padding: 2rem;
   border-radius: 1rem;
   box-shadow: var(--shadow);
@@ -285,9 +383,21 @@ body {
   color: var(--primary);
 }
 
-/* =========================
-   Contact
-============================ */
+.testimonial-extra {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+/* ===================================================
+   Contact Section
+=================================================== */
+.contact-section {
+  background: var(--grey);
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+}
+
 .contact-form {
   max-width: 600px;
   margin: 0 auto;
@@ -323,9 +433,9 @@ body {
   margin-top: 2rem;
 }
 
-/* =========================
-   Modal
-============================ */
+/* ===================================================
+   Modal (Contacter étudiant)
+=================================================== */
 .modal {
   position: fixed;
   top: 0;
@@ -337,7 +447,7 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  animation: fadeIn 0.4s ease-in-out;
+  animation: fadeIn var(--duration) ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -350,11 +460,11 @@ body {
   padding: 2.5rem;
   border-radius: 1rem;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
   position: relative;
   box-shadow: var(--shadow);
-  text-align: center;
-  animation: slideIn 0.4s ease-in-out;
+  text-align: left;
+  animation: slideIn var(--duration) ease-in-out;
 }
 
 @keyframes slideIn {
@@ -370,9 +480,41 @@ body {
   cursor: pointer;
 }
 
-/* =========================
+/* Modal détails étudiants */
+.modal-body p {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.modal-body .student-info {
+  background: var(--grey);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Bouton Voir Profil dans modal */
+.modal-additional {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.modal-additional .modal-profile {
+  background: var(--primary);
+  color: var(--white);
+  padding: 0.8rem 1.6rem;
+  border-radius: 1rem;
+  text-decoration: none;
+  transition: background var(--transition);
+}
+
+.modal-additional .modal-profile:hover {
+  background: var(--secondary);
+}
+
+/* ===================================================
    Footer
-============================ */
+=================================================== */
 footer {
   background: #eee;
   padding: 1.5rem;
@@ -382,9 +524,13 @@ footer {
   margin-top: 2rem;
 }
 
-/* =========================
+.footer-content p {
+  margin-bottom: 0.5rem;
+}
+
+/* ===================================================
    Media Queries
-============================ */
+=================================================== */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -395,8 +541,7 @@ footer {
     margin-top: 1rem;
   }
   .nav-links li + li {
-    margin-left: 0;
-    margin-top: 0.8rem;
+    margin: 0.8rem 0 0;
   }
   .hero {
     flex-direction: column;
