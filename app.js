@@ -1,7 +1,7 @@
-/* =========================
+/* ===================================================
    Navigation et changement de pages
-============================ */
-const navLinks = document.querySelectorAll('.nav-link, .btn-main');
+=================================================== */
+const navLinks = document.querySelectorAll('.nav-link, .btn-main, .scroll-btn');
 const sections = document.querySelectorAll('.page-section');
 
 function switchPage(pageId) {
@@ -29,9 +29,10 @@ navLinks.forEach(link => {
   });
 });
 
-/* =========================
+/* ===================================================
    Données et affichage des formations
-============================ */
+   (Incluant des informations détaillées par étudiant)
+=================================================== */
 const formations = [
   {
     nom: "BUT Informatique",
@@ -52,7 +53,29 @@ const formations = [
     ],
     satisfaction: 4.5,
     description: "Vie étudiante riche, nombreux projets collaboratifs et stages réguliers.",
-    etudiants: ["Emma, 20 ans", "Lucas, 21 ans", "Sarah, 19 ans"]
+    etudiants: [
+      {
+        nom: "Emma",
+        age: 20,
+        domaine: "Développement Web",
+        bio: "Passionnée de code et de technologie, Emma travaille sur des projets innovants et aime partager ses astuces.",
+        email: "emma@example.com"
+      },
+      {
+        nom: "Lucas",
+        age: 21,
+        domaine: "Data Science",
+        bio: "Lucas est un geek des données, capable de transformer des chiffres en histoires captivantes.",
+        email: "lucas@example.com"
+      },
+      {
+        nom: "Sarah",
+        age: 19,
+        domaine: "UI/UX",
+        bio: "Sarah allie créativité et technique pour concevoir des interfaces intuitives et design.",
+        email: "sarah@example.com"
+      }
+    ]
   },
   {
     nom: "Licence Psychologie",
@@ -71,8 +94,23 @@ const formations = [
       "Vendredi : Cours magistral"
     ],
     satisfaction: 3.9,
-    description: "Association dynamique avec un équilibre entre théorie et pratique.",
-    etudiants: ["Chloé, 20 ans", "Yanis, 22 ans"]
+    description: "Association dynamique avec un équilibre parfait entre théorie et pratique.",
+    etudiants: [
+      {
+        nom: "Chloé",
+        age: 20,
+        domaine: "Psychologie Cognitive",
+        bio: "Chloé se passionne pour l'étude des comportements humains et l'impact des environnements sociaux.",
+        email: "chloe@example.com"
+      },
+      {
+        nom: "Yanis",
+        age: 22,
+        domaine: "Psychologie Sociale",
+        bio: "Yanis aime analyser les interactions humaines et s’investit dans des projets de recherche innovants.",
+        email: "yanis@example.com"
+      }
+    ]
   },
   {
     nom: "BTS Commerce International",
@@ -93,15 +131,37 @@ const formations = [
     ],
     satisfaction: 4.2,
     description: "Formation professionnalisante avec une forte dimension internationale.",
-    etudiants: ["Marc, 21 ans", "Léa, 20 ans", "Théo, 22 ans"]
+    etudiants: [
+      {
+        nom: "Marc",
+        age: 21,
+        domaine: "Commerce",
+        bio: "Marc est motivé par les défis internationaux et excelle dans les négociations multiculturelles.",
+        email: "marc@example.com"
+      },
+      {
+        nom: "Léa",
+        age: 20,
+        domaine: "Marketing International",
+        bio: "Léa combine sens aigu du commerce et créativité, se spécialisant dans les stratégies globales.",
+        email: "lea@example.com"
+      },
+      {
+        nom: "Théo",
+        age: 22,
+        domaine: "Gestion Export",
+        bio: "Théo aime optimiser les flux commerciaux et s’engage dans des projets de développement à l'international.",
+        email: "theo@example.com"
+      }
+    ]
   }
-  // Ajoute d'autres formations selon tes besoins
+  // Vous pouvez ajouter autant de formations que nécessaire...
 ];
 
 const container = document.getElementById("cardsContainer");
 const searchInput = document.getElementById("searchInput");
 
-/* Créer une carte avec le bouton "Contacter un étudiant" */
+/* Créer la carte d'une formation avec bouton de contact */
 function createCard(formation) {
   const card = document.createElement("div");
   card.classList.add("card");
@@ -123,36 +183,46 @@ function createCard(formation) {
   container.appendChild(card);
 }
 
+/* Afficher toutes les cartes */
 function renderCards() {
   container.innerHTML = "";
   formations.forEach(createCard);
 }
 
-/* Recherche par nom de formation */
+/* Recherche instantanée dans le catalogue */
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.toLowerCase();
   container.innerHTML = "";
-  formations.filter(form => form.nom.toLowerCase().includes(query))
+  formations.filter(f => f.nom.toLowerCase().includes(query))
             .forEach(createCard);
 });
 
-/* =========================
+/* ===================================================
    Gestion de la modale "Contacter un étudiant"
-============================ */
+   (Affichage détaillé de plusieurs infos)
+=================================================== */
 const modal = document.getElementById("modal");
 const modalClose = document.getElementById("modalClose");
 const modalBody = document.getElementById("modalBody");
 
-function openModal(students) {
-  let listHTML = "<ul>";
-  students.forEach(student => {
-    listHTML += `<li>${student}</li>`;
+// Ouvre la modale et affiche les infos détaillées de chaque étudiant
+function openModal(etudiants) {
+  let html = "";
+  etudiants.forEach(etud => {
+    html += `
+      <div class="student-info">
+        <h4>${etud.nom} (${etud.age} ans)</h4>
+        <p><strong>Domaine :</strong> ${etud.domaine}</p>
+        <p>${etud.bio}</p>
+        <p><strong>Email :</strong> <a href="mailto:${etud.email}">${etud.email}</a></p>
+      </div>
+    `;
   });
-  listHTML += "</ul>";
-  modalBody.innerHTML = listHTML;
+  modalBody.innerHTML = html;
   modal.classList.remove("hidden");
 }
 
+// Ferme la modale
 function closeModal() {
   modal.classList.add("hidden");
 }
@@ -162,17 +232,35 @@ window.addEventListener("click", e => {
   if (e.target === modal) closeModal();
 });
 
-/* Délégation pour le bouton de contact étudiant */
+// Délégation d'événement pour les boutons "Contacter un étudiant"
 document.addEventListener("click", e => {
   if (e.target && e.target.classList.contains("contact-btn")) {
-    const students = JSON.parse(e.target.getAttribute("data-students"));
-    openModal(students);
+    const etudiants = JSON.parse(e.target.getAttribute("data-students"));
+    openModal(etudiants);
   }
 });
 
-/* =========================
+/* ===================================================
+   Gestion du formulaire de contact (affichage confirmation)
+=================================================== */
+const contactForm = document.getElementById("contactForm");
+const contactConfirmation = document.getElementById("contactConfirmation");
+
+contactForm.addEventListener("submit", e => {
+  e.preventDefault();
+  // Simuler l'envoi du formulaire (vous pouvez intégrer ici une requête AJAX)
+  setTimeout(() => {
+    contactForm.reset();
+    contactConfirmation.classList.remove("hidden");
+    setTimeout(() => {
+      contactConfirmation.classList.add("hidden");
+    }, 3000);
+  }, 800);
+});
+
+/* ===================================================
    Initialisation
-============================ */
+=================================================== */
 document.addEventListener("DOMContentLoaded", () => {
   switchPage("home");
   if (document.getElementById("formations").classList.contains("active-section")) {
